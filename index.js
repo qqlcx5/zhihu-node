@@ -6,8 +6,8 @@ var express = require('express');
 var request = require('superagent')
 
 var app = express();
-var HOST = 'http://api.douban.com/v2';
-app.set('port', (process.env.PORT || 5000));
+var HOST = 'http://news-at.zhihu.com/api/4';
+app.set('port', (process.env.PORT || 5500));
 /**
  * CORS support.
  */
@@ -24,7 +24,16 @@ app.all('*', function (req, res, next) {
 });
 
 // 榜单信息
-app.get('/movie/:type', function (req, res) {
+app.get('/news/latest', function (req, res) {
+  var sreq = request.get(HOST + req.originalUrl)
+
+  sreq.pipe(res);
+  sreq.on('end', function (error, res) {
+    console.log('end');
+  });
+})
+
+app.get('/news/before/:id', function (req, res) {
   var sreq = request.get(HOST + req.originalUrl)
   sreq.pipe(res);
   sreq.on('end', function (error, res) {
@@ -32,15 +41,7 @@ app.get('/movie/:type', function (req, res) {
   });
 })
 
-app.get('/movie/subject/:id', function (req, res) {
-  var sreq = request.get(HOST + req.originalUrl)
-  sreq.pipe(res);
-  sreq.on('end', function (error, res) {
-    console.log('end');
-  });
-})
-
-app.get('/movie/search', function (req, res) {
+app.get('/news/:id', function (req, res) {
   var sreq = request.get(HOST + req.originalUrl)
   sreq.pipe(res);
   sreq.on('end', function (error, res) {
