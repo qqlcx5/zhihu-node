@@ -23,7 +23,6 @@ app.all('*', function (req, res, next) {
   next();
 });
 
-// 榜单信息
 app.get('/news/latest', function (req, res) {
   var sreq = request.get(HOST + req.originalUrl)
 

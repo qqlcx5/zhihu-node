@@ -20,8 +20,17 @@ app.set('port', (process.env.PORT || 5000));
 **定义接口**
 
 根据前端所需，定义了如下三个接口：
-```javascript
-app.get('/movie/:type', function (req, res) {
+```js
+app.get('/news/latest', function (req, res) {
+  var sreq = request.get(HOST + req.originalUrl)
+
+  sreq.pipe(res);
+  sreq.on('end', function (error, res) {
+    console.log('end');
+  });
+})
+
+app.get('/news/before/:id', function (req, res) {
   var sreq = request.get(HOST + req.originalUrl)
   sreq.pipe(res);
   sreq.on('end', function (error, res) {
@@ -29,15 +38,7 @@ app.get('/movie/:type', function (req, res) {
   });
 })
 
-app.get('/movie/subject/:id', function (req, res) {
-  var sreq = request.get(HOST + req.originalUrl)
-  sreq.pipe(res);
-  sreq.on('end', function (error, res) {
-    console.log('end');
-  });
-})
-
-app.get('/movie/search', function (req, res) {
+app.get('/news/:id', function (req, res) {
   var sreq = request.get(HOST + req.originalUrl)
   sreq.pipe(res);
   sreq.on('end', function (error, res) {
@@ -69,10 +70,10 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 ```
-**启动**
+**启动服务**
 
 ```
-cd node-proxy
+cd zhihu-node
 node index.js
 ```
 
